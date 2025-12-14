@@ -8,7 +8,7 @@
  *
  * Baritone is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY and FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
@@ -47,12 +47,6 @@ unimined.minecraft {
 //    }
 //}
 
-
-
-
-    inputs.property "version", project.version
-
-    filesMatching("META-INF/neoforge.mods.toml") {
 configurations {
     common
     shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
@@ -79,7 +73,11 @@ dependencies {
     shadowCommon "dev.babbaj:nether-pathfinder:${project.nether_pathfinder_version}"
 }
 
-processResources {expand "version": project.version
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand "version": project.version
     }
 }
 
@@ -137,4 +135,4 @@ publishing {
     repositories {
         // Add repositories to publish to here.
     }
-}
+}  
