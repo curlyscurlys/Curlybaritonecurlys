@@ -47,6 +47,12 @@ unimined.minecraft {
 //    }
 //}
 
+
+
+
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/neoforge.mods.toml") {
 configurations {
     common
     shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
@@ -62,14 +68,18 @@ dependencies {
         common sourceSet.output
         shadowCommon sourceSet.output
     }
+    
+    // --- ADDED CRITICAL GSON DEPENDENCIES HERE ---
+    // 1. Add to 'common' for compilation access in your new Java files
+    common 'com.google.code.gson:gson:2.10.1' 
+    
+    // 2. Add to 'shadowCommon' to ensure GSON is bundled into the final mod JAR
+    shadowCommon 'com.google.code.gson:gson:2.10.1'
+
     shadowCommon "dev.babbaj:nether-pathfinder:${project.nether_pathfinder_version}"
 }
 
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("META-INF/neoforge.mods.toml") {
-        expand "version": project.version
+processResources {expand "version": project.version
     }
 }
 
